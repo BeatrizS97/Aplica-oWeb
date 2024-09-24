@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Juros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 200px;
+        }
+        input[type="submit"] {
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de Juros</h1>
+
+    <!-- Menu de navegação -->
+    <nav>
+        <ul>
+            <li><a href="#juros-simples">Juros Simples</a></li>
+            <li><a href="#juros-compostos">Juros Compostos</a></li>
+        </ul>
+    </nav>
+
+    <hr>
+
+    <!-- Seção de Juros Simples -->
+    <section id="juros-simples">
+        <h2>Calculadora de Juros Simples</h2>
+        <form onsubmit="calcularJurosSimples(); return false;">
+            <label for="montanteSimples">Montante Inicial:</label>
+            <input type="text" id="montanteSimples" required>
+            
+            <label for="taxaSimples">Taxa de Juros (%):</label>
+            <input type="text" id="taxaSimples" required>
+            
+            <label for="mesesSimples">Quantidade de Meses:</label>
+            <input type="text" id="mesesSimples" required>
+            
+            <input type="submit" value="Calcular">
+        </form>
+        <div id="resultadoSimples" class="result"></div>
+    </section>
+
+    <hr>
+
+    <!-- Seção de Juros Compostos -->
+    <section id="juros-compostos">
+        <h2>Calculadora de Juros Compostos</h2>
+        <form onsubmit="calcularJurosCompostos(); return false;">
+            <label for="montanteComposto">Montante Inicial:</label>
+            <input type="text" id="montanteComposto" required>
+            
+            <label for="taxaComposto">Taxa de Juros (%):</label>
+            <input type="text" id="taxaComposto" required>
+            
+            <label for="mesesComposto">Quantidade de Meses:</label>
+            <input type="text" id="mesesComposto" required>
+            
+            <input type="submit" value="Calcular">
+        </form>
+        <div id="resultadoComposto" class="result"></div>
+    </section>
+
+    <script>
+        // Função para calcular juros simples
+        function calcularJurosSimples() {
+            // Obtém os valores do formulário
+            const montante = parseFloat(document.getElementById('montanteSimples').value);
+            const taxa = parseFloat(document.getElementById('taxaSimples').value) / 100;
+            const meses = parseInt(document.getElementById('mesesSimples').value);
+
+            // Calcula o valor futuro
+            const valorFuturo = montante * (1 + taxa * meses);
+
+            // Exibe o resultado
+            document.getElementById('resultadoSimples').innerHTML = `<h3>Resultado: R$ ${valorFuturo.toFixed(2)}</h3>`;
+        }
+
+        // Função para calcular juros compostos
+        function calcularJurosCompostos() {
+            // Obtém os valores do formulário
+            const montante = parseFloat(document.getElementById('montanteComposto').value);
+            const taxa = parseFloat(document.getElementById('taxaComposto').value) / 100;
+            const meses = parseInt(document.getElementById('mesesComposto').value);
+
+            // Inicia a tabela de resultados
+            let tabela = "<h3>Resultado - Tabela de Juros Compostos</h3>";
+            tabela += "<table><tr><th>Mês</th><th>Valor Acumulado</th></tr>";
+
+            // Calcula e exibe os valores acumulados mês a mês
+            for (let i = 1; i <= meses; i++) {
+                const valorFuturo = montante * Math.pow(1 + taxa, i);
+                tabela += `<tr><td>${i}</td><td>R$ ${valorFuturo.toFixed(2)}</td></tr>`;
+            }
+
+            tabela += "</table>";
+
+            // Exibe
+
